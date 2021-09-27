@@ -1,2 +1,4 @@
-package Peças;public class Rei {
+package Peças;
+
+public class Rei {
 }

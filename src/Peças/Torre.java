@@ -1,2 +1,4 @@
-package Peças;public class Torre {
+package Peças;
+
+public class Torre {
 }

@@ -1,2 +1,4 @@
-package Peças;public class Cavalo {
+package Peças;
+
+public class Cavalo {
 }

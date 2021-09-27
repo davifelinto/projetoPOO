@@ -1,2 +1,4 @@
-package Peças;public class Peao {
+package Peças;
+
+public class Peao {
 }
