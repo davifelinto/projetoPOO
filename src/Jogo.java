@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Jogo /*implements KeyListener*/ {
     public static void main(String[] args) {
         
+        /** testando funções **/
         Tabuleiro tabuleiro = new Tabuleiro();
         Scanner ler = new Scanner(System.in);
         
@@ -14,14 +15,22 @@ public class Jogo /*implements KeyListener*/ {
         System.out.println(frase);
         ler.close();
 
-        
+
         /*imprimir na tela o tabuleiro*/
+
         /*pegar o imput do player da vez*/
+
         /*checar se o imput é uma jogada válida*/
+
         /*atualizar o tabuleiro*/
+        tabuleiro.limpaTela();
+
         /*checar regras (check e chekmate)*/
+
         /*finalizar o jogo caso checkmate*/
+
         /*caso continue o jogo, pegar proximo imput e repetir o processo*/
+
     }
 
 
