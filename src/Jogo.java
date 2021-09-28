@@ -1,10 +1,20 @@
 // import java.awt.event.KeyListener;
+import java.util.Scanner;
 
 public class Jogo /*implements KeyListener*/ {
     public static void main(String[] args) {
+        
+        Tabuleiro tabuleiro = new Tabuleiro();
+        Scanner ler = new Scanner(System.in);
+        
         System.out.println("teste\u001B[30m");
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        String frase;
+        frase = ler.nextLine();
+        tabuleiro.limpaTela();
+        System.out.println(frase);
+        ler.close();
+
+        
         /*imprimir na tela o tabuleiro*/
         /*pegar o imput do player da vez*/
         /*checar se o imput é uma jogada válida*/
