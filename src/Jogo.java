@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Jogo /*implements KeyListener*/ {
     public static void main(String[] args) {
         
-        /** testando funções **/
+        /** testando funções
         Tabuleiro tabuleiro = new Tabuleiro();
         Scanner ler = new Scanner(System.in);
         
@@ -14,8 +14,9 @@ public class Jogo /*implements KeyListener*/ {
         tabuleiro.limpaTela();
         System.out.println(frase);
         ler.close();
-
-
+        */
+        ControlaJogo.lerFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");//inicia os chars do tabuleiro nesta posicao
+        Tabuleiro.imprimeTabuleiro(ControlaJogo.isTurno_Branco());
         /*imprimir na tela o tabuleiro*/
 
         /*pegar o imput do player da vez*/
@@ -23,7 +24,7 @@ public class Jogo /*implements KeyListener*/ {
         /*checar se o imput é uma jogada válida*/
 
         /*atualizar o tabuleiro*/
-        tabuleiro.limpaTela();
+        //tabuleiro.limpaTela();
 
         /*checar regras (check e chekmate)*/
 
@@ -37,9 +38,7 @@ public class Jogo /*implements KeyListener*/ {
     /**
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A){
@@ -47,9 +46,7 @@ public class Jogo /*implements KeyListener*/ {
         } else if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D){
             movimento.right = true;
         }
-
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A){
@@ -57,7 +54,6 @@ public class Jogo /*implements KeyListener*/ {
         } else if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D){
             player.right = false;
         }
-
     }
 **/
 }
