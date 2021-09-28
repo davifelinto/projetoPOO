@@ -5,9 +5,6 @@ public class Jogo /*implements KeyListener*/ {
         System.out.println("teste\u001B[30m");
     }
 
-    public void tela (){
-        /**  **/
-    }
 
     /**
     @Override
