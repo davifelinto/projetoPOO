@@ -1,9 +1,8 @@
 package main;
 import java.util.List;
-// import java.awt.event.KeyListener;
 import java.util.Scanner;
 
-public class Jogo /*implements KeyListener*/ {
+public class Jogo {
     public static void main(String[] args) {
         int lin = 0, col = 0, index = 0, indexMove = 0, leOperacoes = 0;
         Scanner ler = new Scanner(System.in);
@@ -77,25 +76,4 @@ public class Jogo /*implements KeyListener*/ {
             }
         }
     }
-    /**
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A){
-            movimento.left = true;
-        } else if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D){
-            movimento.right = true;
-        }
-    }
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A){
-            player.left = false;
-        } else if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D){
-            player.right = false;
-        }
-    }
-**/
 }
