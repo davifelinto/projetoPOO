@@ -35,7 +35,7 @@ public class Tabuleiro {
                 if(Character.isLetter(i)){
                     Casa novaCasa = new Casa(lin, col, i);
                     casa[lin][col] = novaCasa;
-                    instanciaPeca(i, lin, col);
+                    casa[lin][col].setObj_peca(instanciaPeca(i, lin, col));
                     col++;
                 }else if(i == '/'){
                     lin++;
@@ -80,7 +80,7 @@ public class Tabuleiro {
         //Funcao para salvar a partida; 
 
     }
-    public static void instanciaPeca(char p, int lin, int col){
+    public static Peca instanciaPeca(char p, int lin, int col){
         boolean corB;
         Peca peca;
         if(Character.isLowerCase(p))
@@ -107,10 +107,11 @@ public class Tabuleiro {
                 peca = new Rei(corB, lin, col);
                 break;
             default:
-                peca = new Peca(corB, lin, col);
+                peca = null;
                 break;
         }
         adicionarPecaLista(peca);
+        return peca;
     }
     public static void adicionarPecaLista(Peca p){
         if(p.isCor_Branca())
@@ -119,8 +120,14 @@ public class Tabuleiro {
             getSetPecas(false).add(p);
     }
     public static void limpaTela (){
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+    public static void limpaMovimentos(){
+        for(int i = 0; i < 8; i++)
+            for(int j = 0; j < 8; j++)
+                if(Tabuleiro.getCasa(i, j).getPeca() == '.')
+                    Tabuleiro.getCasa(i, j).setPeca(' ');
     }
     public static void imprimeTabuleiro(boolean turn_W, int lin, int col){
             int cor = 0;
@@ -131,7 +138,10 @@ public class Tabuleiro {
                         if(i == lin && j == col)
                             System.out.print("\u001B[32m");
                         else
-                            System.out.print("\u001B[30m");
+                            if(Character.isUpperCase(Tabuleiro.getCasa(i, j).getPeca()))
+                                System.out.print("\u001B[37m");
+                            else
+                                System.out.print("\u001B[30m");
                         System.out.print(Tabuleiro.getCasa(i, j).getPeca() + " ");
                     }
                     System.out.println();
@@ -144,7 +154,10 @@ public class Tabuleiro {
                         if(i == lin && j == col)
                             System.out.print("\u001B[32m");
                         else
-                            System.out.print("\u001B[30m");
+                            if(Character.isUpperCase(Tabuleiro.getCasa(i, j).getPeca()))
+                                System.out.print("\u001B[37m");
+                            else
+                                System.out.print("\u001B[30m");
                         System.out.print(Tabuleiro.getCasa(i, j).getPeca() + " ");
                     }   
                     System.out.println();     
