@@ -38,4 +38,5 @@ public class Rei extends Peca{
         }
         return moveValido;
     }
+    
 }

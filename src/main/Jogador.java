@@ -1,7 +1,7 @@
 package main;
 public class Jogador {
     private boolean cor_Branca;
-
+    
     public boolean isCor_Branca() {
         return cor_Branca;
     }

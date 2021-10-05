@@ -1,17 +1,43 @@
 package main;
 import java.util.List;
 import java.util.Scanner;
+import main.Peças.*;
 
 public class Jogo {
     public static void main(String[] args) {
         int lin = 0, col = 0, index = 0, indexMove = 0, leOperacoes = 0;
         Scanner ler = new Scanner(System.in);
         List<Movimento> moveValido = null;
-
-        Tabuleiro.carregaTabuleiro("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");//inicia o tabuleiro nesta posicao
+        boolean verificouCheque = false;
+        boolean isCheque = false;
+        
+        Tabuleiro.carregaTabuleiro("r1bqkbnr/pppp1ppp/8/4p2Q/2BnP3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4");//inicia o tabuleiro nesta posicao
         while(true){
+            Peca rei = null;
             Tabuleiro.limpaTela();
-            Peca peca = Tabuleiro.getSetPecas(ControlaJogo.isTurno_Branco()).get(index);
+            List<Peca> setdePecas = Tabuleiro.getSetPecas(ControlaJogo.isTurno_Branco());
+            Peca peca = setdePecas.get(index);
+            for(Peca procuraRei : setdePecas){
+                if(procuraRei instanceof Rei){
+                    rei = procuraRei;
+                    break;
+                }
+            }
+            if(!verificouCheque){
+                isCheque = rei.verificaAtaque();
+                verificouCheque = true;
+                if(isCheque){//Se o seu rei estiver em cheque verifica se está em mate6
+                    for(Peca pecaVerifica : setdePecas){
+                        moveValido = pecaVerifica.filtraLista(rei);
+                        if(!moveValido.isEmpty())
+                            break;
+                    }
+                    if(moveValido.isEmpty()){
+                        System.out.println("Chequemate");
+                        break;
+                    }
+                }
+            }
             if(leOperacoes != 5){
                 lin = peca.getPosicao().getLinha();
                 col = peca.getPosicao().getColuna(); 
@@ -25,20 +51,17 @@ public class Jogo {
                     col = move.getCasaDestino().getColuna();
                 }
             }
-            Tabuleiro.imprimeTabuleiro(ControlaJogo.isTurno_Branco(), lin, col);
+            Tabuleiro.imprimeTabuleiro(lin, col, isCheque, rei);
             if(leOperacoes != 5){
                 leOperacoes = ler.nextInt();
                 switch (leOperacoes) {
                     case 6:
-                        index++;
-                        if(index > 15){
-                            index = 15;
-                        }
+                        index = (index + 1) % setdePecas.size();
                         break;
                     case 2:
                         index+=8;
-                        if(index > 15){
-                            index = 15;
+                        if(index > setdePecas.size()){
+                            index = index % setdePecas.size();
                         }
                         break;
                     case 8:
@@ -49,12 +72,11 @@ public class Jogo {
                         break;
                     case 4:
                         index--;
-                        if(index < 0){
-                            index = 0;
-                        }
+                        if(index < 0)
+                            index = setdePecas.size()-1;
                         break;
                     case 5:
-                        moveValido = peca.movimentosValidos();
+                        moveValido = peca.filtraLista(rei);
                         for(Movimento move : moveValido){
                             if(move.getCasaDestino().getPeca() == ' ')
                                 move.getCasaDestino().setPeca('.');
@@ -64,10 +86,7 @@ public class Jogo {
             }else{
                 switch(ler.nextInt()) {
                     case 6:
-                        indexMove++;
-                        if(indexMove > moveValido.size()-1){
-                            indexMove = moveValido.size()-1; 
-                        }
+                        indexMove = (indexMove + 1) % moveValido.size();
                         break;
                     case 4:
                         indexMove--;
@@ -80,20 +99,20 @@ public class Jogo {
                     case 5:
                         leOperacoes = 0;
                         Tabuleiro.limpaMovimentos();
-                        index = 0;
-                        indexMove = 0;
                         Movimento move = moveValido.get(indexMove);
                         peca.setPosicao(move.getCasaDestino());
+                        if(move.getCasaDestino().getObj_peca() != null)
+                            Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(move.getCasaDestino().getObj_peca());//remove a peca da lista adversaria 
                         move.getCasaDestino().setObj_peca(peca);
                         move.getCasaInicial().setObj_peca(null);
                         move.getCasaDestino().setPeca(move.getCasaInicial().getPeca());
                         move.getCasaInicial().setPeca(' ');
-                        if(move.getPecaCapturada() != null){
-                            Tabuleiro.getSetPecas(ControlaJogo.isTurno_Branco()).remove(move.getPecaCapturada());
-                        }
                         ControlaJogo.adicionarMovimento(move);
                         ControlaJogo.setTurno_Branco(!ControlaJogo.isTurno_Branco());
-                    break;
+                        index = 0;
+                        indexMove = 0;
+                        verificouCheque = false;
+                        break;
                 }
             }
         }

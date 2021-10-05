@@ -129,40 +129,20 @@ public class Tabuleiro {
                 if(Tabuleiro.getCasa(i, j).getPeca() == '.')
                     Tabuleiro.getCasa(i, j).setPeca(' ');
     }
-    public static void imprimeTabuleiro(boolean turn_W, int lin, int col){
-            int cor = 0;
-            if(turn_W)
-                //tabuleiro branco
-                for(int i = 0; i < 8; i++){
-                    for(int j = 0; j < 8; j++){
-                        if(i == lin && j == col)
-                            System.out.print("\u001B[32m");
-                        else
-                            if(Character.isUpperCase(Tabuleiro.getCasa(i, j).getPeca()))
-                                System.out.print("\u001B[37m");
-                            else
-                                System.out.print("\u001B[30m");
-                        System.out.print(Tabuleiro.getCasa(i, j).getPeca() + " ");
-                    }
-                    System.out.println();
-                    cor = (cor == 0) ? 1 : 0;
+    public static void imprimeTabuleiro(int lin, int col, boolean isCheque, Peca rei){
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if(i == lin && j == col)
+                    System.out.print("\u001B[32m");
+                else if(isCheque && Tabuleiro.getCasa(i, j).getObj_peca() == rei)
+                        System.out.print("\u001B[31m");
+                else if(Character.isUpperCase(Tabuleiro.getCasa(i, j).getPeca()))
+                    System.out.print("\u001B[37m");
+                else
+                    System.out.print("\u001B[30m");
+                System.out.print(Tabuleiro.getCasa(i, j).getPeca() + " ");
                 }
-            else
-                //tabuleiro preto
-                for(int i = 7; i >= 0; i--){
-                    for(int j = 7; j >= 0; j--){
-                        if(i == lin && j == col)
-                            System.out.print("\u001B[32m");
-                        else
-                            if(Character.isUpperCase(Tabuleiro.getCasa(i, j).getPeca()))
-                                System.out.print("\u001B[37m");
-                            else
-                                System.out.print("\u001B[30m");
-                        System.out.print(Tabuleiro.getCasa(i, j).getPeca() + " ");
-                    }   
-                    System.out.println();     
-                }
-            System.out.print("\u001B[0m");
+                System.out.println();
+            }
         }
-    
 }
