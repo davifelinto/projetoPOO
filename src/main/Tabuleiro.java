@@ -140,9 +140,50 @@ public class Tabuleiro {
                     System.out.print("\u001B[37m");
                 else
                     System.out.print("\u001B[30m");
-                System.out.print(Tabuleiro.getCasa(i, j).getPeca() + " ");
-                }
-                System.out.println();
+                System.out.print(retornaPeca(Tabuleiro.getCasa(i, j).getPeca()) + " ");
             }
+            System.out.println();
         }
+    }
+    public static char retornaPeca(char peca){
+        switch (peca) {
+            case 'P':
+                peca = '♙';
+                break;
+            case 'p':
+                peca = '♟';
+                break;
+            case 'R':
+                peca = '♖';
+                break;
+            case 'r':
+                peca = '♜';
+                break;
+            case 'N':
+                peca = '♘';
+                break;
+            case 'n':
+                peca = '♞';
+                break;
+            case 'B':
+                peca = '♗';
+                break;
+            case 'b':
+                peca = '♝';
+                break;
+            case 'Q':
+                peca = '♕';
+                break;
+            case 'q':
+                peca = '♛';
+                break;
+            case 'K':
+                peca = '♔';
+                break;
+            case 'k':
+                peca = '♚';
+            break;
+        }
+        return peca;
+    }
 }
