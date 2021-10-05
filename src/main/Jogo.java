@@ -33,8 +33,7 @@ public class Jogo {
                         index++;
                         if(index > 15){
                             index = 15;
-                            leOperacoes = 0;
-                            Tabuleiro.limpaMovimentos(); 
+                            leOperacoes = 0; 
                         }
                         break;
                     case 2:
@@ -42,15 +41,13 @@ public class Jogo {
                         if(index > 15){
                             index = 15;
                             leOperacoes = 0;
-                            Tabuleiro.limpaMovimentos(); 
                         }
                         break;
                     case 8:
                         index-=8;
                         if(index < 0){
                             index = 0;
-                            leOperacoes = 0;
-                            Tabuleiro.limpaMovimentos(); 
+                            leOperacoes = 0; 
                         }
                         break;
                     case 4:
@@ -58,7 +55,6 @@ public class Jogo {
                         if(index < 0){
                             index = 0;
                             leOperacoes = 0;
-                            Tabuleiro.limpaMovimentos(); 
                         }
                         break;
                     case 5:
