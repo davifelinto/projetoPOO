@@ -31,9 +31,35 @@ public class Jogo {
                 switch (leOperacoes) {
                     case 6:
                         index++;
+                        if(index > 15){
+                            index = 15;
+                            leOperacoes = 0;
+                            Tabuleiro.limpaMovimentos(); 
+                        }
+                        break;
+                    case 2:
+                        index+=8;
+                        if(index > 15){
+                            index = 15;
+                            leOperacoes = 0;
+                            Tabuleiro.limpaMovimentos(); 
+                        }
+                        break;
+                    case 8:
+                        index-=8;
+                        if(index < 0){
+                            index = 0;
+                            leOperacoes = 0;
+                            Tabuleiro.limpaMovimentos(); 
+                        }
                         break;
                     case 4:
                         index--;
+                        if(index < 0){
+                            index = 0;
+                            leOperacoes = 0;
+                            Tabuleiro.limpaMovimentos(); 
+                        }
                         break;
                     case 5:
                         moveValido = peca.movimentosValidos();
