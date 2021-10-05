@@ -33,28 +33,24 @@ public class Jogo {
                         index++;
                         if(index > 15){
                             index = 15;
-                            leOperacoes = 0; 
                         }
                         break;
                     case 2:
                         index+=8;
                         if(index > 15){
                             index = 15;
-                            leOperacoes = 0;
                         }
                         break;
                     case 8:
                         index-=8;
                         if(index < 0){
-                            index = 0;
-                            leOperacoes = 0; 
+                            index = 0; 
                         }
                         break;
                     case 4:
                         index--;
                         if(index < 0){
                             index = 0;
-                            leOperacoes = 0;
                         }
                         break;
                     case 5:
@@ -69,6 +65,9 @@ public class Jogo {
                 switch(ler.nextInt()) {
                     case 6:
                         indexMove++;
+                        if(indexMove > moveValido.size()-1){
+                            indexMove = moveValido.size()-1; 
+                        }
                         break;
                     case 4:
                         indexMove--;
@@ -82,6 +81,7 @@ public class Jogo {
                         leOperacoes = 0;
                         Tabuleiro.limpaMovimentos();
                         index = 0;
+                        indexMove = 0;
                         Movimento move = moveValido.get(indexMove);
                         peca.setPosicao(move.getCasaDestino());
                         move.getCasaDestino().setObj_peca(peca);
