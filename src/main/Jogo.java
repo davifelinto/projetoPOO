@@ -11,7 +11,7 @@ public class Jogo {
         boolean verificouCheque = false;
         boolean isCheque = false;
         
-        Tabuleiro.carregaTabuleiro("r1bqkbnr/pppp1ppp/8/4p2Q/2BnP3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4");//inicia o tabuleiro nesta posicao
+        Tabuleiro.carregaTabuleiro("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");//inicia o tabuleiro nesta posicao
         while(true){
             Peca rei = null;
             Tabuleiro.limpaTela();
