@@ -1,5 +1,8 @@
 package main;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,9 +79,23 @@ public class Tabuleiro {
         }
         ControlaJogo.fen_Atual = n;
     }
-    public static void gravaTabuleiro(){
-        //Funcao para salvar a partida; 
+    public static void gravaTabuleiro(String s) throws IOException{
+        //Funcao para salvar a partida;
+        File f = new File("partidaAnterior.txt");
+        FileWriter w = new FileWriter("partidaAnterior.txt");
 
+        try {
+            f.createNewFile();
+        } catch (Exception e) {
+            System.out.println("Salvando no arquivo existente: partidaAnterior.bin");
+        }
+        try {
+            w.write(s);
+            w.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar no arquivo: partidaAnterior.bin");
+            e.printStackTrace();
+        }
     }
     public static Peca instanciaPeca(char p, int lin, int col){
         boolean corB;
@@ -145,6 +162,25 @@ public class Tabuleiro {
             System.out.println();
         }
     }
+    public static String tabuleiroParaString(int lin, int col, boolean isCheque, Peca rei){
+        String s = "";
+
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if(Tabuleiro.getCasa(i, j).getPeca() != ' '){
+                s = s + Tabuleiro.getCasa(i, j).getPeca();
+                }
+                else if(Tabuleiro.getCasa(i, j).getPeca() == ' '){
+                    s = s + '1';
+                }
+                Tabuleiro.getCasa(i, j).getPeca();
+            }
+            if (i<7)
+                s = s + '/';
+        }
+        return s;
+    }
+
     public static char retornaPeca(char peca){
         switch (peca) {
             case 'P':

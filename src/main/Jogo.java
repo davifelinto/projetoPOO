@@ -1,10 +1,11 @@
 package main;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import main.Peças.*;
 
 public class Jogo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int lin = 0, col = 0, index = 0, indexMove = 0, leOperacoes = 0;
         Scanner ler = new Scanner(System.in);
         List<Movimento> moveValido = null;
@@ -81,7 +82,10 @@ public class Jogo {
                             if(move.getCasaDestino().getPeca() == ' ')
                                 move.getCasaDestino().setPeca('.');
                         }
-                    break;
+                        break;
+                    case 42:
+                        Tabuleiro.gravaTabuleiro(Tabuleiro.tabuleiroParaString(lin, col, isCheque, rei));
+                        
                 }
             }else{
                 switch(ler.nextInt()) {
