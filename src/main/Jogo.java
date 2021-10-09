@@ -11,8 +11,23 @@ public class Jogo {
         List<Movimento> moveValido = null;
         boolean verificouCheque = false;
         boolean isCheque = false;
+        boolean flag = true;
+        char c;
         
-        Tabuleiro.carregaTabuleiro("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");//inicia o tabuleiro nesta posicao
+        do{
+            Tabuleiro.limpaTela();
+            System.out.println("Deseja continuar um jogo salvo(s) ou iniciar um novo(n)?");
+            c = ler.next().charAt(0);
+            if(c == 'n'){
+                Tabuleiro.carregaTabuleiro("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");//inicia o tabuleiro nesta posicao
+                flag= !flag;
+            }
+            else if (c == 's'){
+                Tabuleiro.carregaTabuleiro(Tabuleiro.leTabuleiro());//inicia tabuleiro com o que ta salvo no arquivo
+                flag= !flag;
+            }
+        } while (flag);
+        
         while(true){
             Peca rei = null;
             Tabuleiro.limpaTela();
@@ -83,8 +98,8 @@ public class Jogo {
                                 move.getCasaDestino().setPeca('.');
                         }
                         break;
-                    case 42:
-                        Tabuleiro.gravaTabuleiro(Tabuleiro.tabuleiroParaString(lin, col, isCheque, rei));
+                    case 9:
+                        Tabuleiro.gravaTabuleiro(Tabuleiro.tabuleiroParaString(ControlaJogo.isTurno_Branco()));
                         
                 }
             }else{
@@ -106,7 +121,23 @@ public class Jogo {
                         Movimento move = moveValido.get(indexMove);
                         peca.setPosicao(move.getCasaDestino());
                         if(move.getCasaDestino().getObj_peca() != null)
-                            Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(move.getCasaDestino().getObj_peca());//remove a peca da lista adversaria 
+                            Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(move.getCasaDestino().getObj_peca());//remove a peca da lista adversaria
+                        
+                        // capturas en passant - não funcionando
+                        /*
+                        else if(move.getCasaInicial().getObj_peca().verifica_peao() && (move.getCasaInicial().getObj_peca().getPosicao().getLinha() == 1 || move.getCasaInicial().getObj_peca().getPosicao().getLinha() == 6)){
+                            Casa casa = new Casa(lin, col, c);
+                            casa = move.getCasaDestino();
+                            casa.setColuna(casa.getColuna()-1);
+                            if(casa.getColuna() > 0 && casa.getObj_peca() != null)
+                                Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(casa.getObj_peca());
+                            else
+                                casa.setColuna(casa.getColuna()+2);
+                            if(casa.getColuna()<8&& casa.getObj_peca() != null)
+                                Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(casa.getObj_peca());
+                        }
+                        */
+
                         move.getCasaDestino().setObj_peca(peca);
                         move.getCasaInicial().setObj_peca(null);
                         move.getCasaDestino().setPeca(move.getCasaInicial().getPeca());
@@ -120,5 +151,6 @@ public class Jogo {
                 }
             }
         }
+        ler.close();
     }
 }

@@ -1,10 +1,12 @@
 package main;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import main.Peças.*;
 
@@ -79,8 +81,8 @@ public class Tabuleiro {
         }
         ControlaJogo.fen_Atual = n;
     }
+    //Funcao para salvar a partida num arquivo txt
     public static void gravaTabuleiro(String s) throws IOException{
-        //Funcao para salvar a partida;
         File f = new File("partidaAnterior.txt");
         FileWriter w = new FileWriter("partidaAnterior.txt");
 
@@ -96,6 +98,59 @@ public class Tabuleiro {
             System.out.println("Erro ao salvar no arquivo: partidaAnterior.bin");
             e.printStackTrace();
         }
+    }
+    //Funcao para ler a partida do arquivo txt
+    public static String leTabuleiro() throws FileNotFoundException{
+        String tab = "";
+        try {
+            File f = new File("partidaAnterior.txt");
+            Scanner ler = new Scanner(f);
+            if (ler.hasNextLine()) {
+                tab = ler.nextLine();
+            }
+            ler.close();
+            return tab;
+        } catch (FileNotFoundException e) {
+            System.out.println("Não existe arquivo de partida salva!");
+            e.printStackTrace();
+        }
+        // Se não tiver arquivo retorna um jogo novo
+        return "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        
+    }
+    // Funcao assessoria pra salvar em arquivo. Transforma tabuleiro em string FEN
+    public static String tabuleiroParaString(boolean isTurno_Branco){
+        String s = "";
+
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if(Tabuleiro.getCasa(i, j).getPeca() != ' '){
+                s = s + Tabuleiro.getCasa(i, j).getPeca();
+                }
+                else if(Tabuleiro.getCasa(i, j).getPeca() == ' '){
+                    s = s + '1';
+                }
+                Tabuleiro.getCasa(i, j).getPeca();
+                }
+                if (i<7)
+                    s = s + '/';
+            }
+        
+        if(isTurno_Branco)
+            s = s + " w ";
+        else
+            s = s + " b ";
+        
+        if((Tabuleiro.getCasa(7, 7).getPeca() == 'R') && (Tabuleiro.getCasa(7, 4).getPeca() == 'K'))
+            s = s + "K";
+        if((Tabuleiro.getCasa(7, 0).getPeca() == 'R') && (Tabuleiro.getCasa(7, 4).getPeca() == 'K'))
+            s = s + "Q";
+        if((Tabuleiro.getCasa(0, 0).getPeca() == 'r') && (Tabuleiro.getCasa(0, 4).getPeca() == 'k'))
+            s = s + "k";
+        if((Tabuleiro.getCasa(0, 7).getPeca() == 'r') && (Tabuleiro.getCasa(0, 4).getPeca() == 'k'))
+            s = s + "q";
+        
+        return s;
     }
     public static Peca instanciaPeca(char p, int lin, int col){
         boolean corB;
@@ -162,25 +217,6 @@ public class Tabuleiro {
             System.out.println();
         }
     }
-    public static String tabuleiroParaString(int lin, int col, boolean isCheque, Peca rei){
-        String s = "";
-
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 8; j++){
-                if(Tabuleiro.getCasa(i, j).getPeca() != ' '){
-                s = s + Tabuleiro.getCasa(i, j).getPeca();
-                }
-                else if(Tabuleiro.getCasa(i, j).getPeca() == ' '){
-                    s = s + '1';
-                }
-                Tabuleiro.getCasa(i, j).getPeca();
-            }
-            if (i<7)
-                s = s + '/';
-        }
-        return s;
-    }
-
     public static char retornaPeca(char peca){
         switch (peca) {
             case 'P':

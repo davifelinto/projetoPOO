@@ -50,6 +50,17 @@ public class Peao extends Peca{
             ,Tabuleiro.getCasa(lin+indice, col-indice).getObj_peca());
             moveValido.add(move);
         }
+        //en passant
+        if(col + indice < 8 && col + indice >= 0 &&lin == pos_ini && eInimigo(this.getPosicao().getPeca(), Tabuleiro.getCasa(lin, col+indice).getPeca())){
+            Movimento move = new Movimento(this.getPosicao(), Tabuleiro.getCasa(lin+indice, col+indice), this
+            ,Tabuleiro.getCasa(lin, col+indice).getObj_peca());
+            moveValido.add(move);
+        }
+        if(col - indice < 8 && col - indice >= 0 && lin == pos_ini && eInimigo(this.getPosicao().getPeca(), Tabuleiro.getCasa(lin, col-indice).getPeca())){
+            Movimento move = new Movimento(this.getPosicao(), Tabuleiro.getCasa(lin+indice, col-indice), this
+            ,Tabuleiro.getCasa(lin, col-indice).getObj_peca());
+            moveValido.add(move);
+        }
         return moveValido;
     }
 }
