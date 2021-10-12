@@ -2,6 +2,7 @@ package main.Peças;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.ControlaJogo;
 import main.Movimento;
 import main.Peca;
 import main.Tabuleiro;
@@ -51,12 +52,22 @@ public class Peao extends Peca{
             moveValido.add(move);
         }
         //en passant
-        if(col + indice < 8 && col + indice >= 0 &&lin == pos_ini && eInimigo(this.getPosicao().getPeca(), Tabuleiro.getCasa(lin, col+indice).getPeca())){
+        List<Movimento> listaMove = ControlaJogo.getPgn();
+        if(col + indice < 8 && col + indice >= 0 && lin == pos_ini + (indice*3) 
+        && listaMove.get((listaMove.size()) - 1).getPecaMovimentada() instanceof Peao //verifica se o ultimo movimento foi feito por um peao
+        && listaMove.get((listaMove.size()) - 1).getCasaInicial() == Tabuleiro.getCasa(lin+(indice*2), col+indice)
+        && listaMove.get((listaMove.size()) - 1).getCasaDestino() == Tabuleiro.getCasa(lin, col+indice)// e se esse peao pulou duas casas
+        ){
+            Peca pecaCapturada = Tabuleiro.getCasa(lin, col+indice).getObj_peca();
             Movimento move = new Movimento(this.getPosicao(), Tabuleiro.getCasa(lin+indice, col+indice), this
-            ,Tabuleiro.getCasa(lin, col+indice).getObj_peca());
+            ,pecaCapturada);
             moveValido.add(move);
         }
-        if(col - indice < 8 && col - indice >= 0 && lin == pos_ini && eInimigo(this.getPosicao().getPeca(), Tabuleiro.getCasa(lin, col-indice).getPeca())){
+        if(col - indice < 8 && col - indice >= 0 && lin == pos_ini + (indice*3)
+        && listaMove.get((listaMove.size()) - 1).getPecaMovimentada() instanceof Peao
+        && listaMove.get((listaMove.size()) - 1).getCasaInicial() == Tabuleiro.getCasa(lin+(indice*2), col-indice)
+        && listaMove.get((listaMove.size()) - 1).getCasaDestino() == Tabuleiro.getCasa(lin, col-indice)
+        ){
             Movimento move = new Movimento(this.getPosicao(), Tabuleiro.getCasa(lin+indice, col-indice), this
             ,Tabuleiro.getCasa(lin, col-indice).getObj_peca());
             moveValido.add(move);
@@ -64,30 +75,3 @@ public class Peao extends Peca{
         return moveValido;
     }
 }
-/**
-function pawn_movement(position_letter, position_number, color){
-	//capturas
-	if(position_letter != letra_1 && global.tabletop[position_letter+indice][position_number+indice] != " "
-	&& (string_char_at(color, 1) != string_char_at(global.tabletop[position_letter+indice][position_number + indice], 1))){
-		allow[tam] = pos[position_letter+indice][position_number+indice];
-		tam++;
-	}
-	if(position_letter != letra_2 && global.tabletop[position_letter-indice][position_number+indice] != " "
-	&& (string_char_at(color, 1) != string_char_at(global.tabletop[position_letter-indice][position_number + indice], 1))){
-		allow[tam] = pos[position_letter-indice][position_number+indice];
-		tam++;
-	}
-	//capturas en passant
-	num = letra_1-(3*indice);
-	if(position_letter != letra_1 && position_number == num && global.tabletop[position_letter+indice][position_number] == roc + "pawn"
-	&& turn_control.notation[turn_control.c_turn] == string(position_letter+indice)+string(position_number+indice*2)+string(position_letter+indice)+string(position_number)){
-		allow[tam] = pos[position_letter+indice][position_number+indice];
-		tam++;
-	}
-	if(position_letter != letra_2 && position_number == num && global.tabletop[position_letter-indice][position_number] == roc + "pawn"
-	&& turn_control.notation[turn_control.c_turn] == string(position_letter-indice)+string(position_number+indice*2)+string(position_letter-indice)+string(position_number)){
-		allow[tam] = pos[position_letter-indice][position_number+indice];
-		tam++;
-	}
-
-} */

@@ -42,7 +42,7 @@ public class Jogo {
             if(!verificouCheque){
                 isCheque = rei.verificaAtaque();
                 verificouCheque = true;
-                if(isCheque){//Se o seu rei estiver em cheque verifica se está em mate6
+                if(isCheque){//Se o seu rei estiver em cheque verifica se está em mate
                     for(Peca pecaVerifica : setdePecas){
                         moveValido = pecaVerifica.filtraLista(rei);
                         if(!moveValido.isEmpty())
@@ -120,24 +120,10 @@ public class Jogo {
                         Tabuleiro.limpaMovimentos();
                         Movimento move = moveValido.get(indexMove);
                         peca.setPosicao(move.getCasaDestino());
-                        if(move.getCasaDestino().getObj_peca() != null)
-                            Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(move.getCasaDestino().getObj_peca());//remove a peca da lista adversaria
-                        
-                        // capturas en passant - não funcionando
-                        /*
-                        else if(move.getCasaInicial().getObj_peca().verifica_peao() && (move.getCasaInicial().getObj_peca().getPosicao().getLinha() == 1 || move.getCasaInicial().getObj_peca().getPosicao().getLinha() == 6)){
-                            Casa casa = new Casa(lin, col, c);
-                            casa = move.getCasaDestino();
-                            casa.setColuna(casa.getColuna()-1);
-                            if(casa.getColuna() > 0 && casa.getObj_peca() != null)
-                                Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(casa.getObj_peca());
-                            else
-                                casa.setColuna(casa.getColuna()+2);
-                            if(casa.getColuna()<8&& casa.getObj_peca() != null)
-                                Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(casa.getObj_peca());
+                        if(move.getPecaCapturada()!= null){
+                            move.getPecaCapturada().getPosicao().setPeca(' ');
+                            Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(move.getPecaCapturada());//remove a peca da lista adversaria
                         }
-                        */
-
                         move.getCasaDestino().setObj_peca(peca);
                         move.getCasaInicial().setObj_peca(null);
                         move.getCasaDestino().setPeca(move.getCasaInicial().getPeca());
