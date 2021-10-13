@@ -29,7 +29,7 @@ public class ControlaJogo {
     public static void setTurno_Branco(boolean turno_Branco) {
         ControlaJogo.turno_Branco = turno_Branco;
     }
-    public static boolean isRoque_dama_p() {
+    public static boolean isRoque_Dama_p() {
         return roque_Dama_p;
     }
     public static void setRoque_Dama_p(boolean roque_Dama_p) {

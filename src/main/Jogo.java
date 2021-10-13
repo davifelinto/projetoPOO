@@ -120,8 +120,54 @@ public class Jogo {
                         Tabuleiro.limpaMovimentos();
                         Movimento move = moveValido.get(indexMove);
                         peca.setPosicao(move.getCasaDestino());
+                        if(peca instanceof Torre){
+                            if(peca.isCor_Branca()){
+                                if(move.getCasaInicial().getColuna() == 7)
+                                    ControlaJogo.setRoque_Rei_b(false);
+                                else
+                                if(move.getCasaInicial().getColuna() == 0)
+                                    ControlaJogo.setRoque_Dama_b(false);
+                            }else{
+                                if(move.getCasaInicial().getColuna() == 7)
+                                    ControlaJogo.setRoque_Rei_p(false);
+                                else
+                                if(move.getCasaInicial().getColuna() == 0)
+                                    ControlaJogo.setRoque_Dama_p(false);
+                            }
+                        }
+                        if(peca instanceof Rei){
+                            if(peca.isCor_Branca()){
+                                ControlaJogo.setRoque_Rei_b(false);
+                                ControlaJogo.setRoque_Dama_b(false);
+                            }else{
+                                ControlaJogo.setRoque_Rei_p(false);
+                                ControlaJogo.setRoque_Dama_p(false);
+                            }
+                            //se o movimento feito for roque
+                            if(move.getPecaCapturada()!= null){
+                                if(move.getPecaCapturada().isCor_Branca() == move.getPecaMovimentada().isCor_Branca()){
+                                    //move a torre
+                                    if(move.getCasaDestino().getColuna() == 6){
+                                        Tabuleiro.getCasa(peca.getPosicao().getLinha(), 5).setPeca(move.getPecaCapturada().getPosicao().getPeca());
+                                        move.getPecaCapturada().getPosicao().setPeca(' ');
+                                        move.getPecaCapturada().getPosicao().setObj_peca(null);
+                                        move.getPecaCapturada().setPosicao(Tabuleiro.getCasa(peca.getPosicao().getLinha(), 5));
+                                        Tabuleiro.getCasa(peca.getPosicao().getLinha(), 5).setObj_peca(move.getPecaCapturada());
+                                    }else{
+                                        Tabuleiro.getCasa(peca.getPosicao().getLinha(), 3).setPeca(move.getPecaCapturada().getPosicao().getPeca());
+                                        move.getPecaCapturada().getPosicao().setPeca(' ');
+                                        move.getPecaCapturada().getPosicao().setObj_peca(null);
+                                        move.getPecaCapturada().setPosicao(Tabuleiro.getCasa(peca.getPosicao().getLinha(), 3));
+                                        Tabuleiro.getCasa(peca.getPosicao().getLinha(), 3).setObj_peca(move.getPecaCapturada());
+                                    }
+                                }
+                            }
+                        }
                         if(move.getPecaCapturada()!= null){
-                            move.getPecaCapturada().getPosicao().setPeca(' ');
+                            if(move.getPecaCapturada() instanceof Peao){
+                                move.getPecaCapturada().getPosicao().setPeca(' ');
+                                move.getPecaCapturada().getPosicao().setObj_peca(null);
+                            }
                             Tabuleiro.getSetPecas(!(ControlaJogo.isTurno_Branco())).remove(move.getPecaCapturada());//remove a peca da lista adversaria
                         }
                         move.getCasaDestino().setObj_peca(peca);

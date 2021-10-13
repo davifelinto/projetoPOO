@@ -38,10 +38,6 @@ public abstract class Peca {
     public void setPosicao(Casa posicao){
         this.posicao = posicao;
     }
-    public void setPosicao(int lin, int col){
-        this.posicao.setColuna(col);
-        this.posicao.setLinha(lin);
-    }
     public Casa getPosicao() {
         return posicao;
     }
@@ -87,10 +83,14 @@ public abstract class Peca {
             indice = +1;
         else
             indice = -1;
-        if(Tabuleiro.getCasa(lin, col+indice).getObj_peca() instanceof Peao && eInimigo(this.getPosicao().getPeca(), Tabuleiro.getCasa(lin+indice, col+indice).getPeca()))
-            return true;
-        if(Tabuleiro.getCasa(lin, col+indice).getObj_peca() instanceof Peao && eInimigo(this.getPosicao().getPeca(), Tabuleiro.getCasa(lin+indice, col-indice).getPeca()))
-            return true;
+        if(col + indice < 8 && col + indice >= 0 && lin - indice < 8 && lin - indice >= 0){
+            if(Tabuleiro.getCasa(lin-indice, col+indice).getObj_peca() instanceof Peao && eInimigo(this.getPosicao().getPeca(), Tabuleiro.getCasa(lin-indice, col+indice).getPeca()))
+                return true;
+        }
+        if(col - indice < 8 && col - indice >= 0 && lin - indice < 8 && lin - indice >= 0){
+            if(Tabuleiro.getCasa(lin-indice, col-indice).getObj_peca() instanceof Peao && eInimigo(this.getPosicao().getPeca(), Tabuleiro.getCasa(lin-indice, col-indice).getPeca()))
+                return true;
+        }
         return false;
     }
     public boolean verifica_torre(){

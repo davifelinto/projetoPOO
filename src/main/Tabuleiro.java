@@ -141,13 +141,13 @@ public class Tabuleiro {
         else
             s = s + " b ";
         
-        if((Tabuleiro.getCasa(7, 7).getPeca() == 'R') && (Tabuleiro.getCasa(7, 4).getPeca() == 'K'))
+        if(ControlaJogo.isRoque_Rei_b())
             s = s + "K";
-        if((Tabuleiro.getCasa(7, 0).getPeca() == 'R') && (Tabuleiro.getCasa(7, 4).getPeca() == 'K'))
+        if(ControlaJogo.isRoque_Dama_b())
             s = s + "Q";
-        if((Tabuleiro.getCasa(0, 0).getPeca() == 'r') && (Tabuleiro.getCasa(0, 4).getPeca() == 'k'))
+        if(ControlaJogo.isRoque_Rei_p())
             s = s + "k";
-        if((Tabuleiro.getCasa(0, 7).getPeca() == 'r') && (Tabuleiro.getCasa(0, 4).getPeca() == 'k'))
+        if(ControlaJogo.isRoque_Dama_b())
             s = s + "q";
         
         return s;
